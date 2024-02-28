@@ -1,8 +1,8 @@
 import axios, {AxiosInstance} from 'axios';
 import AnimeRankingDto from "./types/AnimeRankingDto";
 import { AnimeDetailsDto } from "./types/AnimeDetailsDto";
+import { Config } from 'react-native-config';
 
-const BASE_URL = 'https://api.myanimelist.net/v2';
 const PAGE_SIZE = 10;
 
 export interface IMalService {
@@ -15,8 +15,8 @@ export class MalService implements IMalService {
 
     constructor() {
         this._axiosInstance = axios.create({
-            baseURL: BASE_URL,
-            headers: {'X-MAL-CLIENT-ID': ''}, // TODO: API KEY
+            baseURL: Config.MAL_API_URL,
+            headers: {'X-MAL-CLIENT-ID': Config.MAL_API_KEY},
         });
     }
 
