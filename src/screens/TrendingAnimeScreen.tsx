@@ -1,8 +1,9 @@
 import { Text, FlatList, ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query'
-import AnimeItemView from './AnimeItemView';
-import AnimeDetailsShort from './data/AnimeDetailsShort';
-import { MalRepository, IMalRepository } from './api/MalRepository';
+import AnimeItemView from '../components/AnimeItemView';
+import AnimeDetailsShort from '../data/AnimeDetailsShort';
+import { MalRepository, IMalRepository } from '../api/MalRepository';
+/* @ts-ignore */
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 const testData: AnimeDetailsShort[] = [
@@ -54,7 +55,7 @@ function TrendingAnimeScreen() {
         <FlatList
             data = {data.pages.map((page,i) => page.data).flat()}
             renderItem={({item}) => <AnimeItemView item={item} />}
-            onEndReached={fetchNextPage}
+            onEndReached={() => fetchNextPage()}
             onEndReachedThreshold={0.7}
             ListFooterComponent={ListEndLoader}
         />

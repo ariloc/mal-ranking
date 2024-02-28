@@ -1,26 +1,17 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import AnimeDetailsShort from './data/AnimeDetailsShort';
+import AnimeDetailsShort from '../data/AnimeDetailsShort';
+import AnimeItemImageView from './AnimeItemImageView';
 
 type AnimeItemViewProps = PropsWithChildren<{
     item: AnimeDetailsShort
 }>;
 
 function AnimeItemView ({item}: AnimeItemViewProps) {
-    const [isLoadingImage, setLoadingImage] = useState(true);
-
     return (
         <View style={styles.container}>
             <Text style={styles.rank}>{item.rank}</Text>
-            <View>
-                <Image 
-                    source={{uri: item.picture_url}}
-                    onLoadStart={() => {setLoadingImage(true)}}
-                    onLoadEnd={() => {setLoadingImage(false)}}
-                    style={styles.picture}
-                />
-                {isLoadingImage && <ActivityIndicator style={styles.loading_indicator} />}
-            </View>
+            <AnimeItemImageView picture_url={item.picture_url} />
             <View style={styles.text_container}>
                 <Text numberOfLines={2} ellipsizeMode='tail' style={styles.title}>
                     {item.title}
@@ -59,17 +50,6 @@ const styles = StyleSheet.create({
         color: 'black',
         marginBottom: 4,
     },
-    loading_indicator: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-    },
-    picture: {
-        height: '100%',
-        aspectRatio: 9/14,
-        resizeMode: 'contain',
-        marginEnd: 16,
-    }
 });
 
 export default AnimeItemView;
