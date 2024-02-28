@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import AnimeDetailsShort from './src/data/AnimeDetailsShort';
+import AnimeDetailsShort from './data/AnimeDetailsShort';
 
 type AnimeItemViewProps = PropsWithChildren<{
     item: AnimeDetailsShort
