@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TrendingAnimeScreen from './TrendingAnimeScreen';
+import TrendingAnimeScreen from './src/TrendingAnimeScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import 'react-native-url-polyfill/auto';

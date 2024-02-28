@@ -1,9 +1,9 @@
 import { PropsWithChildren, useState } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import AnimeItem from './AnimeItem';
+import AnimeDetailsShort from './src/data/AnimeDetailsShort';
 
 type AnimeItemViewProps = PropsWithChildren<{
-    item: AnimeItem
+    item: AnimeDetailsShort
 }>;
 
 function AnimeItemView ({item}: AnimeItemViewProps) {
@@ -25,11 +25,6 @@ function AnimeItemView ({item}: AnimeItemViewProps) {
                 <Text numberOfLines={2} ellipsizeMode='tail' style={styles.title}>
                     {item.title}
                 </Text>
-                {/*
-                <Text numberOfLines={4} ellipsizeMode='tail' style={styles.synopsis}>
-                    {item.synopsis}
-                </Text>
-               */}
             </View>
         </View>
     );
@@ -63,10 +58,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'black',
         marginBottom: 4,
-    },
-    synopsis: {
-        flexShrink: 1,
-        color: 'black',
     },
     loading_indicator: {
         position: 'absolute',
