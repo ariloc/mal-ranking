@@ -1,23 +1,30 @@
 import { PropsWithChildren } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator, Pressable } from 'react-native';
 import AnimeDetailsShort from '../data/AnimeDetailsShort';
-import AnimeItemImageView from './AnimeItemImageView';
+import AnimeImageView from './AnimeItemImageView';
 
 type AnimeItemViewProps = PropsWithChildren<{
     item: AnimeDetailsShort
+    navigateToDetails: (id: number, headerTitle: string) => void
 }>;
 
-function AnimeItemView ({item}: AnimeItemViewProps) {
+function AnimeItemView ({item, navigateToDetails}: AnimeItemViewProps) {
     return (
-        <View style={styles.container}>
-            <Text style={styles.rank}>{item.rank}</Text>
-            <AnimeItemImageView picture_url={item.picture_url} />
+        <Pressable
+            onPress={() => navigateToDetails(item.id, item.title)} 
+            style={styles.container} 
+            android_ripple={{color: 'gray'}}
+        >
+            <Text style={styles.rank} adjustsFontSizeToFit={true} numberOfLines={1}>{item.rank}</Text>
+            <View style={styles.image_container}>
+                <AnimeImageView picture_url={item.picture_url} />
+            </View>
             <View style={styles.text_container}>
                 <Text numberOfLines={2} ellipsizeMode='tail' style={styles.title}>
                     {item.title}
                 </Text>
             </View>
-        </View>
+        </Pressable>
     );
 };
 
@@ -35,12 +42,17 @@ const styles = StyleSheet.create({
         borderBottomColor: 'gray',
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
+    image_container: {
+        marginEnd: 16
+    },
     text_container: {
         width: '100%',
         flex: 1
     },
     rank: {
-        fontSize: 20,
+        fontSize: 24,
+        width: 24,
+        textAlign: 'center',
         marginEnd: 16,
         color: 'black',
     },

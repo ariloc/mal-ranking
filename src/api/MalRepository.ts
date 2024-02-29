@@ -3,6 +3,7 @@ import { AnimeRankingMapper } from "./AnimeRankingMapper";
 import AnimeDetails from "../data/AnimeDetails";
 import { MalService } from "./MalService";
 import PagedResult from "../utils/PagedResult";
+import { AnimeDetailsMapper } from "./AnimeDetailsMapper";
 
 export interface IMalRepository {
     getAnimeRanking: (pageOffset: number) => Promise<PagedResult<AnimeRanking>>
@@ -22,9 +23,16 @@ export class MalRepository implements IMalRepository {
     }
 
     public async getAnimeDetails(id: number): Promise<AnimeDetails> {
-        // TODO: Implement
-        return {
-
-        }
+        const detailsDto = await this._service.fetchAnimeDetails(
+            id,
+            [
+                'id',
+                'title',
+                'synopsis',
+                'main_picture',
+                'rank',
+            ]
+        );
+        return AnimeDetailsMapper.toEntity(detailsDto);
     }
 }

@@ -5,7 +5,7 @@ import Utils from '../utils/Utils'
 
 export class AnimeRankingMapper {
     static toEntity(dto: AnimeRankingDto): PagedResult<AnimeRanking> {
-        const anime = dto.data.map((item) => {
+        const details: AnimeRanking = dto.data.map((item) => {
             return {
                 id: item.node.id,
                 title: item.node.title,
@@ -22,7 +22,7 @@ export class AnimeRankingMapper {
             || Utils.getURLSearchParamOrNull(dto.paging.previous, 'limit') ;
 
         return {
-            data: anime,
+            data: details,
             nextPage: nextParams != null ? parseInt(nextParams) : null,
             previousPage: previousParams != null ? parseInt(previousParams) : null,
             pageSize: pageSizeStr != null ? parseInt(pageSizeStr) : null,

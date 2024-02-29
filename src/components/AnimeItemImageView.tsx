@@ -3,13 +3,13 @@ import { useState, PropsWithChildren } from "react";
 /* @ts-ignore */
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'; 
 
-type AnimeItemImageViewProps = PropsWithChildren<{
-    picture_url: string | null | undefined
+type AnimeImageViewProps = PropsWithChildren<{
+    picture_url: string | null | undefined      // TODO: Lazy Load images (e.g. use React Native Elements)
 }>
 
-function AnimeItemImageView ({picture_url}: AnimeItemImageViewProps) {
-    const [isLoadingImage, setLoadingImage] = useState(picture_url != null);
-    const [loadingError, setLoadingError] = useState(picture_url == null);
+function AnimeImageView ({picture_url}: AnimeImageViewProps) {
+    const [isLoadingImage, setLoadingImage] = useState(true);
+    const [loadingError, setLoadingError] = useState(false);
 
     return (
         <View style={[
@@ -17,7 +17,7 @@ function AnimeItemImageView ({picture_url}: AnimeItemImageViewProps) {
             styles.picture_container,
             (isLoadingImage || loadingError) && styles.picture_overlay
         ]}>
-            {loadingError ? 
+            {(loadingError || picture_url == null) ? 
                 <FontAwesome6 size={18} name={'circle-exclamation'} />
             : 
             <>
@@ -37,7 +37,6 @@ function AnimeItemImageView ({picture_url}: AnimeItemImageViewProps) {
 
 const styles = StyleSheet.create({
     picture_container: {
-        marginEnd: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -53,4 +52,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AnimeItemImageView;
+export default AnimeImageView;

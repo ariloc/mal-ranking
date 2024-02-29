@@ -2,9 +2,10 @@ import { Text, FlatList, ActivityIndicator, StyleSheet, View } from 'react-nativ
 import { useInfiniteQuery } from '@tanstack/react-query'
 import AnimeItemView from '../components/AnimeItemView';
 import AnimeDetailsShort from '../data/AnimeDetailsShort';
-import { MalRepository, IMalRepository } from '../api/MalRepository';
-/* @ts-ignore */
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { useContext } from 'react';
+import { MalRepoContext, RootStackParamList } from '../../App';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import LoadableScreen from '../components/LoadableScreen';
 
 const testData: AnimeDetailsShort[] = [
     {
@@ -21,60 +22,49 @@ const testData: AnimeDetailsShort[] = [
     },
 ];
 
-function TrendingAnimeScreen() {
-    const malRepo: IMalRepository = new MalRepository()
+type TrendingAnimeScreenProps = NativeStackScreenProps<RootStackParamList, 'TrendingAnime'>;
+
+function TrendingAnimeScreen ({navigation, route}: TrendingAnimeScreenProps) {
+    const malRepo = useContext(MalRepoContext)
 
     const {
         data,
-        error,
+        isFetched,
+        isError,
         fetchNextPage,
-        status
     } = useInfiniteQuery({
         queryKey: ['trending-anime'],
         queryFn: ({ pageParam }) => malRepo.getAnimeRanking(pageParam),
         initialPageParam: 0,
-        getNextPageParam: (lastPage, _) => lastPage.nextPage
+        getNextPageParam: (lastPage, _) => lastPage.nextPage,
+        placeholderData: { pages: [], pageParams: [] }
     });
 
     const ListEndLoader = () => {
         return (
             <ActivityIndicator style={{padding: 8}} />
         );
-    }
+    };
 
-    return status === 'pending' ? (
-        <ActivityIndicator size={'large'} style={styles.main_loading_indicator} />
-    ) : status === 'error' ? (
-        <View style={styles.error_indicator}>
-            <FontAwesome6 size={64} name={'circle-exclamation'} />
-            <Text>
-                {error.message}
-            </Text>
-        </View>
-    ) : (
-        <FlatList
-            data = {data.pages.map((page,i) => page.data).flat()}
-            renderItem={({item}) => <AnimeItemView item={item} />}
-            onEndReached={() => fetchNextPage()}
-            onEndReachedThreshold={0.7}
-            ListFooterComponent={ListEndLoader}
-        />
+    return (
+        <LoadableScreen isLoading={!isFetched} isError={isError}>
+            <FlatList
+                data = {data!.pages.map((page,i) => page.data).flat()}
+                renderItem={({item}) => 
+                    <AnimeItemView 
+                        item={item} 
+                        navigateToDetails={(id: number, headerTitle: string) => 
+                            navigation.navigate('AnimeDetails', {id, headerTitle})
+                        } 
+                    />
+                }
+                onEndReached={() => fetchNextPage()}
+                onEndReachedThreshold={0.6}
+                ListFooterComponent={ListEndLoader}
+            />
+        </LoadableScreen>
     );
 }
 
-const styles = StyleSheet.create({
-    main_loading_indicator: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
-    error_indicator: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-});
 
 export default TrendingAnimeScreen;

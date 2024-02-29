@@ -3,11 +3,11 @@ import AnimeRankingDto from "./types/AnimeRankingDto";
 import { AnimeDetailsDto } from "./types/AnimeDetailsDto";
 import { Config } from 'react-native-config';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 25;
 
 export interface IMalService {
     fetchAnimeRanking: (pageOffset: number) => Promise<AnimeRankingDto>;
-    fetchAnimeDetails: (id: number) => Promise<AnimeDetailsDto>;
+    fetchAnimeDetails: (id: number, fields: string[]) => Promise<AnimeDetailsDto>;
 };
 
 export class MalService implements IMalService {
@@ -31,7 +31,10 @@ export class MalService implements IMalService {
         return response.data;
     }
 
-    public async fetchAnimeDetails(id: number): Promise<AnimeDetailsDto> {
-        // TODO: Implement
+    public async fetchAnimeDetails(id: number, fields: string[]): Promise<AnimeDetailsDto> {
+        const response = await this._axiosInstance.get('/anime/' + id, {
+            params: {fields: fields.join(',')}
+        });
+        return response.data;
     }
 }
