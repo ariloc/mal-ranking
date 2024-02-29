@@ -5,9 +5,6 @@ import { useContext } from 'react';
 import { MalRepoContext, RootStackParamList } from '../../App';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import LoadableScreen from '../components/LoadableScreen';
-/* @ts-ignore */
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import { RefreshControl } from 'react-native-gesture-handler';
 
 type TrendingAnimeScreenProps = NativeStackScreenProps<RootStackParamList, 'TrendingAnime'>;
 

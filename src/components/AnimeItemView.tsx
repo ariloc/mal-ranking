@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Platform, Pressable } from 'react-native';
 import AnimeDetailsShort from '../data/AnimeDetailsShort';
 import AnimeImageView from './AnimeItemImageView';
 
@@ -12,7 +12,12 @@ function AnimeItemView ({item, navigateToDetails}: AnimeItemViewProps) {
     return (
         <Pressable
             onPress={() => navigateToDetails(item.id, item.title)} 
-            style={styles.container} 
+            style={({pressed}) => [
+                styles.container,
+                {
+                    backgroundColor: Platform.OS === 'ios' && pressed ? 'rgba(0,0,0,0.15)' : undefined
+                }
+            ]} 
             android_ripple={{color: 'gray'}}
         >
             <Text style={styles.rank} adjustsFontSizeToFit={true} numberOfLines={1}>{item.rank}</Text>
