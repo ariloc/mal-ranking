@@ -4,6 +4,8 @@ import { AnimeDetailsDto } from "./dto/AnimeDetailsDto";
 import { Config } from 'react-native-config';
 import { TRENDING_PAGE_REQUEST_SIZE } from '../Constants';
 
+const MAL_API_URL = 'https://api.myanimelist.net/v2'
+
 export interface IMalService {
     fetchAnimeRanking: (pageOffset: number) => Promise<AnimeRankingDto>;
     fetchAnimeDetails: (id: number, fields: string[]) => Promise<AnimeDetailsDto>;
@@ -14,7 +16,7 @@ export class MalService implements IMalService {
 
     constructor() {
         this._axiosInstance = axios.create({
-            baseURL: Config.MAL_API_URL,
+            baseURL: MAL_API_URL,
             headers: {'X-MAL-CLIENT-ID': Config.MAL_API_KEY},
         });
     }
