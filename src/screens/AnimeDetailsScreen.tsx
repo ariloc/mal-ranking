@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MalRepoContext, RootStackParamList } from "../../App";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
@@ -6,16 +6,13 @@ import { useContext, useState } from "react";
 import LoadableScreen from "../components/LoadableScreen";
 import AnimeImageView from "../components/AnimeItemImageView";
 import AnimeDetails, { ANIME_DETAILS_DEFAULT } from "../data/AnimeDetails";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RankIndicator from "../components/RankIndicator";
-
-const SYNOPSIS_SHORT_LINES = 5
+import { SYNOPSIS_SHORT_LINES } from "../Constants";
 
 type AnimeDetailsScreenProps = NativeStackScreenProps<RootStackParamList, 'AnimeDetails'>;
 
 function AnimeDetailsScreen ({route}: AnimeDetailsScreenProps) {
     const malRepo = useContext(MalRepoContext);
-    const insets = useSafeAreaInsets();
 
     const [readMoreEnabled, enableReadMore] = useState(false);
 
@@ -108,7 +105,8 @@ const styles = StyleSheet.create({
     },
     rank_indicator: {
         flex: 1,
-        marginVertical: 8
+        marginTop: 12,
+        marginBottom: 8
     }
 });
 

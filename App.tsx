@@ -5,10 +5,8 @@ import TrendingAnimeScreen from './src/screens/TrendingAnimeScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import 'react-native-url-polyfill/auto';
-import { AppRegistry } from 'react-native';
 import AnimeDetailsScreen from './src/screens/AnimeDetailsScreen';
 import { IMalRepository, MalRepository } from './src/api/MalRepository';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Stack
 export type RootStackParamList = {

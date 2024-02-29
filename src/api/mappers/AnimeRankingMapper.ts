@@ -1,10 +1,10 @@
-import AnimeRankingDto from './types/AnimeRankingDto'
-import { AnimeRanking } from '../data/AnimeRanking';
-import PagedResult from '../utils/PagedResult';
-import Utils from '../utils/Utils'
+import AnimeRankingDto from '../dto/AnimeRankingDto'
+import { AnimeRanking } from '../../data/AnimeRanking';
+import PagedResult from '../../utils/PagedResult';
+import Utils from '../../utils/Utils'
 
 export class AnimeRankingMapper {
-    static toEntity(dto: AnimeRankingDto): PagedResult<AnimeRanking> {
+    public static toEntity(dto: AnimeRankingDto): PagedResult<AnimeRanking> {
         const details: AnimeRanking = dto.data.map((item) => {
             return {
                 id: item.node.id,

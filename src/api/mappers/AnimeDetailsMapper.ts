@@ -1,5 +1,5 @@
-import AnimeDetails from "../data/AnimeDetails";
-import { AnimeDetailsDto } from "./types/AnimeDetailsDto";
+import AnimeDetails from "../../data/AnimeDetails";
+import { AnimeDetailsDto } from "../dto/AnimeDetailsDto";
 
 export class AnimeDetailsMapper {
     public static toEntity(dto: AnimeDetailsDto): AnimeDetails {

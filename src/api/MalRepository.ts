@@ -1,9 +1,9 @@
 import { AnimeRanking } from "../data/AnimeRanking";
-import { AnimeRankingMapper } from "./AnimeRankingMapper";
+import { AnimeRankingMapper } from "./mappers/AnimeRankingMapper";
 import AnimeDetails from "../data/AnimeDetails";
 import { MalService } from "./MalService";
 import PagedResult from "../utils/PagedResult";
-import { AnimeDetailsMapper } from "./AnimeDetailsMapper";
+import { AnimeDetailsMapper } from "./mappers/AnimeDetailsMapper";
 
 export interface IMalRepository {
     getAnimeRanking: (pageOffset: number) => Promise<PagedResult<AnimeRanking>>

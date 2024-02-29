@@ -1,9 +1,8 @@
 import axios, {AxiosInstance} from 'axios';
-import AnimeRankingDto from "./types/AnimeRankingDto";
-import { AnimeDetailsDto } from "./types/AnimeDetailsDto";
+import AnimeRankingDto from "./dto/AnimeRankingDto";
+import { AnimeDetailsDto } from "./dto/AnimeDetailsDto";
 import { Config } from 'react-native-config';
-
-const PAGE_SIZE = 25;
+import { TRENDING_PAGE_REQUEST_SIZE } from '../Constants';
 
 export interface IMalService {
     fetchAnimeRanking: (pageOffset: number) => Promise<AnimeRankingDto>;
@@ -25,7 +24,7 @@ export class MalService implements IMalService {
             params: {
                 ranking_type: 'all',
                 offset: pageOffset,
-                limit: PAGE_SIZE,
+                limit: TRENDING_PAGE_REQUEST_SIZE,
             }
         });
         return response.data;
