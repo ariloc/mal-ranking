@@ -17,18 +17,17 @@ function AnimeDetailsScreen ({route}: AnimeDetailsScreenProps) {
     const [readMoreEnabled, enableReadMore] = useState(false);
 
     const {
-        data,
-        isFetched,
-        isError,
+        data = ANIME_DETAILS_DEFAULT,
+        isLoading,
+        isLoadingError,
+        refetch
     } = useQuery<AnimeDetails>({
         queryKey: ['anime-details', route.params.id],
         queryFn: () => malRepo.getAnimeDetails(route.params.id),
-        placeholderData: ANIME_DETAILS_DEFAULT,
-        initialData: ANIME_DETAILS_DEFAULT
     });
 
     return (
-        <LoadableScreen isLoading={!isFetched} isError={isError}>
+        <LoadableScreen isLoading={isLoading} isError={isLoadingError} retryFn={refetch}>
             <ScrollView contentContainerStyle={{padding: 12}} >
                 <View style={styles.title_container}>
                     <View style={styles.image_container}>

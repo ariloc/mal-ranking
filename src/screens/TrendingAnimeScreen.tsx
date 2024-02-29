@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import LoadableScreen from '../components/LoadableScreen';
 /* @ts-ignore */
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { RefreshControl } from 'react-native-gesture-handler';
 
 type TrendingAnimeScreenProps = NativeStackScreenProps<RootStackParamList, 'TrendingAnime'>;
 
@@ -17,8 +18,8 @@ function TrendingAnimeScreen ({navigation, route}: TrendingAnimeScreenProps) {
         data,
         isLoading,
         isLoadingError,
-        isError,
         fetchNextPage,
+        refetch
     } = useInfiniteQuery({
         queryKey: ['trending-anime'],
         queryFn: ({ pageParam }) => malRepo.getAnimeRanking(pageParam),
@@ -31,16 +32,9 @@ function TrendingAnimeScreen ({navigation, route}: TrendingAnimeScreenProps) {
             <ActivityIndicator style={{padding: 8}} />
         );
     };
-    const ListEndError = () => {
-        return (
-            <View style={{margin: 8, flex: 1, alignItems: 'center'}}>
-                <FontAwesome6 size={16} name={'circle-exclamation'} />
-            </View>
-        );
-    };
 
     return (
-        <LoadableScreen isLoading={isLoading} isError={isLoadingError}>    
+        <LoadableScreen isLoading={isLoading} isError={isLoadingError} retryFn={refetch}>    
             <FlatList
                 data = {data?.pages?.map((page,i) => page.data)?.flat() ?? []}
                 renderItem={({item}) => 
@@ -53,7 +47,7 @@ function TrendingAnimeScreen ({navigation, route}: TrendingAnimeScreenProps) {
                 }
                 onEndReached={() => fetchNextPage()}
                 onEndReachedThreshold={0.6}
-                ListFooterComponent={isError ? ListEndError : ListEndLoader}
+                ListFooterComponent={ListEndLoader}
             />
         </LoadableScreen>
     );
