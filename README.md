@@ -1,4 +1,4 @@
-# mal-trending
+# mal-ranking
 
 A simple app that lists the current anime ranking on MyAnimeList.
 Made with React Native, tested on Android.
